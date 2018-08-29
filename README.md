@@ -13,20 +13,13 @@ Overview
 $ go get github.com/micnncim/go-get-org
 ```
 
-## :rocket: Features
-
-- Feature
-- ...
-
-## :zap: Requirement
-
-- Requirement
-- ...
-
 ## :mag: Usage
 
-1. Usage
-1. ...
+```sh
+$ go-get-org <ORGANIZATION> <GITHUB_ACCESS_TOKEN>
+$ # or
+$ fillin go-get-org <ORGANIZATION> {{token}}
+```
 
 ## :bulb: Example
 
