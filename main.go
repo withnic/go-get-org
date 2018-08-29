@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"time"
 
 	"github.com/urfave/cli"
 )
@@ -22,7 +23,7 @@ type Repos []struct {
 func main() {
 	app := cli.NewApp()
 	app.Name = "go-get-org"
-	app.Usage = "git commit messages with emoji"
+	app.Usage = "go get all repositories of the organization"
 	app.Action = GetRepos
 
 	app.Run(os.Args)
@@ -52,16 +53,27 @@ func GetRepos(c *cli.Context) error {
 		names = append(names, repo.FullName)
 	}
 
-	for _, name := range names {
-		path := fmt.Sprintf("github.com/%s/...", name)
-		fmt.Printf("go get -u %s\n", path)
-		out, err := exec.Command("go", "get", "-u", path).Output()
-		if err != nil {
-			log.Fatal(err)
+	for {
+		output := make(chan string)
+		for _, name := range names {
+			go func(name string) {
+				path := fmt.Sprintf("github.com/%s/...", name)
+				fmt.Printf("go get -u %s\n", path)
+				out, err := exec.Command("go", "get", "-u", path).Output()
+				if err != nil {
+					log.Fatal(err)
+				}
+				output <- string(out)
+			}(name)
+			select {
+			case o := <-output:
+				fmt.Println(o)
+			case <-time.After(30 * time.Second):
+				fmt.Println("timeout")
+			}
 		}
-		fmt.Println(out)
-	}
 
-	fmt.Println("done")
-	return nil
+		fmt.Println("done")
+		return nil
+	}
 }
