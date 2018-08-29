@@ -66,8 +66,8 @@ func GetRepos(c *cli.Context) error {
 				output <- string(out)
 			}(name)
 			select {
-			case o := <-output:
-				fmt.Println(o)
+			case <-output:
+				fmt.Printf("go get github.com/%s succeeded\n", name)
 			case <-time.After(30 * time.Second):
 				fmt.Println("timeout")
 			}
