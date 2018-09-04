@@ -1,10 +1,6 @@
 # go-get-org
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-Overview
-
-## :memo: Description
-
 `go get` all repositories of the specified organization.
 
 ## :package: Installation
@@ -28,7 +24,7 @@ $ fillin go-get-org <ORGANIZATION> {{token}}
 ## :bulb: Example
 
 ```
-go-get-org uber-go $GITHUB_TOKEN
+$ go-get-org uber-go $GITHUB_TOKEN
 installing the following repositories (22)
 uber-go/zap
 uber-go/gwr
