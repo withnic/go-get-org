@@ -77,7 +77,7 @@ func goGetRepos(repos []*github.Repository) error {
 	}
 
 	fmt.Printf("\ninstalled repositories: %d\n", len(repos)-len(rest))
-	fmt.Printf("installed repositories: %d\n", len(rest))
+	fmt.Printf("not installed repositories: %d\n", len(rest))
 	if len(rest) == 0 {
 		return nil
 	}
